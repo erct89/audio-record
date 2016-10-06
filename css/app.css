@@ -1,0 +1,55 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+
+html{
+	height: 100%;
+	width: 100%;
+}
+
+body{
+	text-align: center;
+}
+
+main{
+	text-align: center;
+}
+
+h2{
+	border-bottom: 1px solid gray;
+}
+
+video{
+	border: 5px solid black;
+	border-radius: 5px
+}
+
+.hide{
+	display: none;
+	visibility: hidden;
+}
+.enabled{
+	cursor: auto;
+	pointer-events: auto;
+}
+.disabled{
+	opacity: 0.65; 
+  	cursor: not-allowed;
+  	pointer-events:none;
+}
+
+#main-content{
+	display: flex;
+	width: 100%;
+	border: 1px solid gray
+}
+
+#col-1{
+	width: 75%;
+	border-right: 1px solid gray;
+}
+
+#col-2{
+	width: 25%;
+}	

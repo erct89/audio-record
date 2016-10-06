@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Audio Recording</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://webrtc.dev.ivrpowers.com/original/adapter.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="css/app.css"/>
+	<script type="text/javascript">
+	
+	</script>
+</head>
+<body>
+	<div id="wrapper">
+		<header>
+			<h1>Local AudioRecorder</h1>
+		</header>
+		<main>
+			<div id="main-content">
+				<div id="col-1">
+					<h2>Visualizador</h2>
+					<div id="viewer">
+						<audio id="player" autoplay="true" poster="images/play.png" height="360px" width="640px">
+							
+						</audio>
+						<nav>
+							<button id="on">On</button>
+						</nav>
+						<nav>
+							<button id="rec">Start</button>
+							<button id="pause">Pausa</button>
+							<button id="stop">Parar</button>
+							<a id="download" href="">Descargar</a>
+						</nav>
+					</div>
+					<div id="dataElement">
+						  
+					</div>
+				</div>
+				<div id="col-2">
+					<h2>Lista de Grabaciones</h2>
+					<ul id="recList">
+						
+					</ul>
+				</div>
+			</div>
+		</main>
+		<footer>
+			<h3>Emilio Añover García</h3>
+		</footer>
+	</div>
+</body>
+</html>
