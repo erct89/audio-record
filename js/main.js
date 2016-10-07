@@ -74,7 +74,7 @@ function onClickEncender(){
 			log(err);
 		});
 	}else if(btnOn.innerHTML ==='Off' && mediaStream){
-		stopMediaStream(mediaStream,function(){
+		stopMediaStream(function(){
 			btnOn.innerHTML = 'On';
 			btnRecStart.classList.add('hide', 'disabled');
 			btnPause.classList.add('hide', 'disabled');
@@ -90,6 +90,8 @@ function starMediaDevices(successCallback,errorCallBack){
 	let success = (typeof(successCallback) ==='function')? successCallback : function(){};
 	let error = (typeof(errorCallBack) === 'function')? errorCallBack : function(){};
 
+	console.log("Debug: Obteniendo la camara.");
+
 	if(navigator.getUserMedia){
 		navigator.getUserMedia(constraints,startDevices,errorCallBack);
 		success();
@@ -98,19 +100,21 @@ function starMediaDevices(successCallback,errorCallBack){
 	}
 }
 
-function stopMediaStream(stream,successCallback,errorCallBack){
+function stopMediaStream(successCallback,errorCallBack){
 	let success = (typeof(successCallback) ==='function')? successCallback : function(){};
 	let error = (typeof(errorCallBack) === 'function')? errorCallBack : function(){};
 
-	if(stream){
+	if(mediaStream){
 		log('<p>Apagando la camara...</p>');
 		
 		video.pause();
 		video.src = "";
-		for(mST of stream.getTracks()){
+
+		for(mST of mediaStream.getTracks()){
+			console.log(mST);
 			mST.stop();
 		}
-		stream = null;
+		mediaStream = null;
 		success();
 	}else{
 		error('No se ha recibido ningun MediaStream');
@@ -208,7 +212,7 @@ function startGrabacion(stream){
 		var recordO = {};
 		recordO.blob = new Blob(chuncks,{type: mimeType.mime});
 		recordO.id = new Date().getTime();
-		recordO.name = "audio_"+(Math.random()*10000000)+"."+mimeType.subfix;
+		recordO.name = generateString('','audio',mimeType.subfix,{top:'_',bottom:'.'});
 		
 		recordsObjects.push(recordO);
 		chuncks = [];
@@ -251,8 +255,32 @@ function errorCallBack(err){
 	log("<p>navigator.getUserMedia error: "+ err +"</p>");
 }
 
+//Funcion para generar un string con un prefijo, un subfijo y con separadores;
+//@param seeder (function) = new Date().getTime;
+//@param prefix (string) = '_';
+//@param subfix (string) = '';
+//@param separator (object) = {top:'_',bottom:''};  
+function generateString(seeder,prefix,subfix,separator){
+	var _separator = { top: "", bottom: ""};
+	var _seeder = (typeof seeder === "function")? seeder(): new Date().getTime().toString();
+	_seeder = (typeof _seeder === "string")? _seeder: "";
+	prefix = (typeof prefix === "string")? prefix: "";
+	subfix = (typeof subfix === "string")? subfix: "";
+	switch(typeof separator){
+		case "string":
+			_separator.top = _separator.bottom = separator;
+		break;
+		case "object":
+			_separator.top = (typeof separator.top === "string")?separator.top :"";
+			_separator.bottom = (typeof separator.bottom === "string")? separator.bottom :"";
+		break;
+	}
+	
+	return prefix + _separator.top + _seeder + _separator.bottom + subfix;
+}
+
 function log(message){
-	dataElement.innerHtml = message;
+	dataElement.innerHTML = message;
 }
 
 //Obtener el navegador.
